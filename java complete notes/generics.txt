@@ -1,0 +1,446 @@
+
+Generics
+:
+========
+
+The main oobjectives of generics are to provide type safety and to resolve type casting probles.
+
+
+Type safety:
+============
+
+case 1:
+-------
+
+Array are type safe taht is we can give the gurenty for the type of elemnts present inside the array 
+
+  ex: if our programm requirents is only strig type of object we can choose string array by mistake if we 
+  are trying to add any other type of objects we will get compile time error.
+  
+      String [] s= new String [1000];
+	  s[0]=""durga;
+	  s[1]="sathya";
+	  s[2]=new Integer(10);  //ce: incopatible error found int required String
+	  
+	  s[2]= "sai";
+	  
+	  
+	  Hence string array can contains only string type of objects due to this we can give the gurenty for the type of emnts
+	  present inside array ,hence arrayas are safe to use wrto type i.e array are type safe.
+	  
+	  
+	  
+	 
+
+
+ ArrayList al= new ArrayList();
+
+
+    al.add("sathya");
+     al.add("sathya");
+    al.add(new Integer(19));
+
+accssing the elements:
+=================
+    String name1= (String)al.get(0);
+    String name1= (String)al.get(1);
+    String name1= (String)al.get(2);  //RE: class cast exception
+
+
+ But collections are not type safe i e we cant give the gurenty for the type of elements present inside the collecton
+
+   ex: if our programm requiremnt is to hold only string type of objects and if we choose arraylist, by mistake if we are trying to
+   add any other type of objects we wont get any compile tyime error but the program may fail at run time.
+
+Hence we cant give the gurentee for the type of elemnts preent inside the collectionsdue to this collections are not safe to use wr to type.
+i.e collections rae not type safe.
+
+case 2:
+======
+
+Type Casting:
+============
+
+
+
+
+String [] s= new String[1000];
+
+  s[0]="sathya";
+  
+ to fetch:
+ ===
+ String name 1= s[0];
+ 
+     ==> type casting not required 
+
+in the case of arrays at the time of retrival it is not require to perform type casting 
+bcz there is a gurentee for the type of elents present inside array.
+   										 
+										 
+										 
+ArrayList l= new ArrayList();
+   l.add("sathya");
+
+
+fetch:
+----
+
+String name= l.get(0);
+  
+   String name=(String)l.get(0); 
+    ==> mandetory to use type casting here    
+										 
+But in the case of collections at the time of retrival compulsory we shoukd perform type
+ casting bcz there is no gurentee for the type of elements prsent inside collection 
+
+
+To overcome above problems of collections some people introduced generics concept in 1.5 version 
+  hene the main objective of generics are 
+     ==> to provide type-safety
+	 ==> to resolve type casting problems .
+	 
+	 
+	 
+==>>
+for example to hold String type of objects we can create generic version of arraylist object
+
+  ArrayList al= new ArrayList();
+  
+  al.add("shiva");
+  al.add(new Integer(100));  // co,pile time error
+
+for this arraylist we can add only string type of objects by mistake if we are trying to addd any other type then we will get 
+compile time error.
+
+  Hence through generics  we are getting type safety 
+  
+  At the time of retrival we are not required ti perform type casting 
+    String name= l.get(0);
+	    ==> not required type casting 
+
+  
+Hence throgh generics we can solve type casting probelem
+
+
+conclusion 1:
+============
+
+
+polymorphism concept applicable for only base type but not parameter type 
+
+(useage of parent reference to hold chld object is the concept of polymorphism)
+
+  ArrayList<String> al= new ArrayList<String>();
+  
+  List<String>  al= new ArrayList<String>();
+  
+  Collection <String> al= new ArrayList<String>();
+  
+  ===>>>ArrayList<Object> al= new ArrayList<String>();  ==> compile time error 
+  
+ 
+ conclusion 2:
+ =============
+
+for the type parameter we can provide any class aor interface name but not primitives
+if we are trying to provide primitive we will get compile time error.
+
+ArrayList<int> al= new ArrayList<int>();
+          ==> compile time error 
+
+
+
+Generic classes:
+================
+
+ until 1.4 version  anon generic version of arraylist class is declared
+as follows 
+
+   class ArrayList
+{
+   add(Object o)
+   
+   Object get(int index)
+}   
+
+
+ the argemnt to add method s object and hence we can add any type of object to the arrayist 
+ 
+ due to this we are missing type safety .
+ 
+ the return type of  get method is object hence at the time of retrival we have to perform type casting .
+ 
+ 
+from 1.5 version 
+
+class ArryList<T>
+{
+
+   add(T K)
+   
+   T get (int index);
+}
+ 
+ 
+ a generic version of arralist class as declared as follows above.
+ 
+In generics wee are assosciating a type paramenter to the class such type of parameterized classes are nothin but generic classes are template classes 
+
+
+ex:
+===
+
+Based on our requiremnt we can define our own generic classes also 
+
+  class Account{
+  
+    
+  }
+ 
+   Account <Gold> ac= new Account<Gold>();
+   Account <Platinum> ac= new Account<Platinum>();
+   
+ 
+Bounded Types:
+=============
+
+we can bound  the type of paramter for a perticyular rang by using extends keyword such type are called bounded types 
+
+ 
+ class Test<T>
+ {
+ 
+ }
+
+As the type parameter we can pass any type and there are n ristrictions and hence it is unbounde type 
+
+ Test<Integer> t1= new Test<Integer>();
+ Test<String> t2= new Test<String>();
+ 
+
+syntax for Bounded type:
+======================
+
+class Test< T extends x>
+
+{
+
+
+
+
+}
+
+==> x can be either class or interface 
+==>if x is a class  then as the type parameter we can pass either x type or its child classes
+==>if x is an interface then  as a type parameter w can pass either x type or its implementation clasesse.
+
+
+ex:
+===
+class Test<T extends Number>
+ {
+ 
+ 
+ }
+
+  Test<Integer> t= new Test<Integer>();  //valid
+  Test<String>  t= new Test<String>();  // invalid(CE: type param java lang)
+  
+  
+  
+  
+  ex:
+  ==
+  
+  class Test<T extends Runnable>
+  {
+  
+  
+  }
+  
+  Test<Runnable> t1= new Test<Runnable>(); //valid 
+  Test<Thread> t2= new Test<Thread>(); //valid
+  
+  Test<Integer> t3= new Test<Integer>(); // invalid: its not child of runnable
+       (compile time error)  => it is not with its bound 
+  
+  
+ * we can define bounded type eevn in combination also 
+
+ex:
+==
+
+class Test<T extends Number&Runnable>
+{
+
+} 
+  
+=>as type parameter  we can take anything which should be child class of Number and should be implemnts runnable interface.
+
+conditions too check bounded type:
+====================================
+
+class Test<T extends Runnable & Comparable>  //valid
+class Test<T extends Number&Runnable & Comparable>  //valid 
+class Test<T extends Runnable & Number>  //invalid 
+class Test<T extends Number & Thread>  // /invalid
+
+
+
+note:
+=====
+* we can define bounded types only for using extends keyword , we cant use implemnts and super keywords.
+    but we can replace implements keyword purpose with extends keyword 
+	
+ 
+*as the type parameter T  we can take any valid java identifier but it is convention to use "T"
+
+ class Test<T>
+ {
+ 
+ }
+
+class Test<x>
+{
+
+}
+
+
+class Test<A>
+{
+
+
+}
+
+**
+ based on our requiremnt we can declare any number of type parameters and all these type parameters are 
+ seperated with ,(comma)
+ 
+ class Test<A,B>
+ {
+ 
+ }
+
+
+class Test<k,v>
+{
+
+
+}
+
+
+Generic methods and Wildcard Charecter(?):
+==========================================
+
+ 
+1.  m1(Al<String>  l)
+
+  * we can call this method by passing ArrayaliST of only String type 
+  
+       m1(Al<String>  l)
+	   {
+	      l.add("a");
+		  l.add(null);
+		  l.add(10); // invalid
+	   
+	   }
+ but with in the method we can add only string type of objects to the list by mistake if we are trying to add
+ any other type then we wil get, compile time error.
+ 
+ 
+2. m1(Al<?> l)
+
+   *WE CAN CALL THIS METHOD BY PASSING any unknown type 
+  
+But with in the method we cant add anything to the list except null , bcz we dont know th type exacltly
+ Null is allowed bcz it is valid value for anytype
+
+     m1(Al<?> l)
+	 {
+	 
+	   l.add(10.5); //invlid
+	   l.add("a"); //invlid
+	   l.add(10); //invlid
+	   l.add(null); //valid
+	   
+	    
+	 }
+ 
+ **this type of methdos are best suitable for read only operation
+ 
+  
+3.  m1(Al<? extends x>  l)
+
+ * x can be either a class or interface 
+ * if x is a class then we can call this method by passing arraylist of x type or its child class
+  *if x is an interface then we can call this methdod by passing arraylist of either x type or its implemntation classes
+  * but with in themethod we cant add anything to the list except null bcz we dont know the type of x exacltly.
+    *  this type methods are best suitable for Read only operation 
+	  
+	
+4. m1(AL<? super x> l)
+
+  * x can be either class or interface 
+*if x i a class then we can call tis method by pasing araylist of either x type or its super clases 
+*if x is an interface then we can call this method by passing arraylist of either x type or siper clas of implemntation class of x
+
+   * within the method we can add x type of objects
+and null to the list.	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+   
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
